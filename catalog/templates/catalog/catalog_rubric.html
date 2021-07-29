@@ -1,0 +1,34 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Категория: {{ current_category.name }} {% endblock %}
+
+{% block content%} 
+
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Категория: {{ current_category.name }}</h1>
+                        </header>
+                        <hr>
+
+                        <div class="container-fluid">
+                        <div class="row" style='text-align: center;'>
+                           {% for product in catalog_of_rubrics %} 
+                           <div class="col-xl-12" style="margin-bottom: 15px;">
+                                <img src="{{ product.image.url }}"  alt="">
+                                <p>{{ product.name }}</p>
+                                <a href="{{ product.get_absolute_url }}">
+                                <button>Подробнее</button>
+                                </a>
+                            </div> 
+                           {% endfor %} 
+                        </div>
+                        </div>
+
+                    
+
+                   </div>
+                </div> 
+
+
+{% endblock %}

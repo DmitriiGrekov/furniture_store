@@ -1,0 +1,24 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Изменение данных пользователя{% endblock %}
+
+{% block content%} 
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Изменение данных пользователя</h1>
+                        </header>
+                        <hr>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {{form.as_p  }}
+                            <input type="submit" value='Изменить'>
+
+                        </form>
+
+                   </div>
+                </div>
+
+
+{% endblock %}

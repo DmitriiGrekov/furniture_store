@@ -1,0 +1,19 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Сообщение об ошибке {% endblock %}
+
+
+{% block content%} 
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Данной страницы не существует</h1>
+                        </header>
+                        <hr>
+                        <p><b>{{ request_path }}</b> данной страницы не существует</p>
+                        
+                        						
+                    </div>
+                </div>
+
+{% endblock %}

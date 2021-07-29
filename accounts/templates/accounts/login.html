@@ -1,0 +1,28 @@
+{% extends 'layout/basic.html'  %}
+{% load bootstrap4 %}
+
+{% block title%} Вход на сайт {% endblock %}
+
+{% block content%} 
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Вход на сайт</h1>
+                        </header>
+                        <hr>
+                        {% bootstrap_javascript jquery=1 %}
+                        {% bootstrap_messages %}
+                                                   
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            {{form.as_p  }}
+                            <input type="submit" value='Войти'>
+
+                        </form>
+
+                   </div>
+                </div>
+
+
+{% endblock %}

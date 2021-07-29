@@ -1,0 +1,16 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Вы успешно вышли с сайта {% endblock %}
+
+{% block content%} 
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Вы успешно вышли с сайта</h1>
+                        </header>
+                        <hr>
+                        <p>Вы можете <a href="{% url 'users:login' %}">Войти</a> на сайт</p>
+
+                   </div>
+                </div>
+{% endblock %}

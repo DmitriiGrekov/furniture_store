@@ -1,0 +1,28 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Профиль пользователя {{ user.username }} {% endblock %}
+
+{% block content%} 
+
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Профиль пользователя {{ user.username }}</h1>
+                        </header>
+                        <hr>
+                        {% if user.avatar %}
+                           
+                        <img src="{{ user.avatar.url}}" alt="">
+                        {% endif %}
+                        <p>Имя: {{ user.first_name }}</p>
+                        <p>Фамилия: {{ user.last_name}}</p>
+                        <p>Почта: {{ user.email}}</p>
+                        <p>Логин: {{ user.username}}</p>
+                        <p>Телефон: {{ user.phone}}</p>
+
+                        <p><a href="{% url 'users:update' user.pk %}">Изменить данные</a></p>
+                        <p><a href="{% url 'users:password_change'%}">Изменить пароль</a></p>
+
+                   </div>
+                </div>
+{% endblock %}

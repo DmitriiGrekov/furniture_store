@@ -1,0 +1,21 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Создание объявления {% endblock %}
+
+{% block content%} 
+     <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Создание объявления</h1>
+                        </header>
+                        <hr>
+
+                        <form method="POST" enctype="multipart/form-data" >
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value='Отправить'>
+                        </form>
+                        						
+                    </div>
+                </div>
+{% endblock %}

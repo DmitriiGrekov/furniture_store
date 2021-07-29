@@ -1,0 +1,7 @@
+{% autoescape on %}
+Уважаемый {{ user.username }}
+Вы отправили запрос на смену пароля на сайте {{ domain }}.
+Для смены пароля перейдите по ссылке
+{{ host }}{% url 'users:register_activate' token=sign%}
+До свидания
+{% endautoescape %}

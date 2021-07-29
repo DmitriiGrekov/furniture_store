@@ -1,0 +1,18 @@
+{% load static %}
+
+{% for review in random_reviews  %} 
+ <div class="item">
+									<div class="side-block side-opin">
+										<div class="inner-block">
+											<div class="title">
+												<div class="photo-block">
+													<img src="{{ review.img.url }}" alt="">
+												</div>
+												<div class="name-block"><a href="">{{ review.name }}</a></div>
+												<div class="pos-block">{{ review.position }},"{{ review.company }}"</div>
+											</div>
+											<div class="text-block">{{ review.content|truncatechars:100 }}</div>
+										</div>
+									</div>
+								</div>
+{% endfor %}

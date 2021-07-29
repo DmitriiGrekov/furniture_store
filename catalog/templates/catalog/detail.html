@@ -1,0 +1,29 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} {{ product.name }} {% endblock %}
+
+{% block content%} 
+
+   <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>{{ product.name }}</h1>
+                        </header>
+                        <hr>
+
+                        <div class="container-fluid">
+                        <div class="row" style='text-align: center;'>
+                           <div class="col-xl-12" style="margin-bottom: 15px;">
+                                <img src="{{ product.image.url }}"  alt="">
+                                <p>{{ product.name }}</p>
+                                <p>{{ product.price }}</p>
+                                <p>{{ product.description }}</p>
+                            </div> 
+                        </div>
+                        </div>
+
+                    
+
+                   </div>
+                </div> 
+{% endblock %}

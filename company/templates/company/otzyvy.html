@@ -1,0 +1,30 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Отзывы о компании {% endblock %}
+
+{% block content%} 
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Отзывы</h1>
+                        </header>
+                        <hr>
+                        <a href="{% url 'company:create' %}">Создать отзыв</a>
+                        {% for review in reviews %} 
+                         <div class="review-block">
+							<div class="review-text">
+							
+								<div class="review-block-title"><span class="review-block-name"><a href="{{ review.get_absolute_url }}">{{ review.name }}</a></span><span class="review-block-description">{{ review.publish|date:"d.m.Y" }} г. , {{ review.position }} , {{ review.company }} </span></div>
+								
+								<div class="review-text-cont">
+                                    {{ review.content }}
+								</div>
+							</div>
+							<div class="review-img-wrap"><a href="{{ review.get_absolute_url }}"><img src="{{ review.img.url }}" alt="img"></a></div>
+						</div>
+
+                        {% endfor %}
+                        						
+                    </div>
+                </div>
+{% endblock %}

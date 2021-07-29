@@ -1,0 +1,32 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} {{ news.title }} {% endblock %}
+
+{% block content%} 
+
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>{{ news.title }}</h1>
+                        </header>
+                        <hr>
+    <div class="news-detail">
+				<span class="news-date-time">{{ news.publish|date:'d.m.Y' }}</span>
+				<h3>{{ news.title }}</h3>
+                {% if news.author %}
+                <b>Авторы:</b>
+                {{ news.author }}
+                <br>
+                <br>
+                   
+                {% endif %}
+				{{ news.description|linebreaks  }}	
+
+ 		<div style="clear:both"></div>
+	<br>
+	</div><p><a href="{% url 'news:list' %}">Возврат к списку</a></p>
+
+
+                   </div>
+                </div>
+{% endblock %}

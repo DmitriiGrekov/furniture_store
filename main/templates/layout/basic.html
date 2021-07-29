@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>{% block title%} Главная {% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/owl.carousel.css' %}" />
+    <script src="{% static '/js/jquery.min.js' %}"></script>
+    <script src="{% static '/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static '/js/scripts.js' %}"></script>
+    <link rel="icon" type="image/vnd.microsoft.icon"  href="{% static '/img/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static '/img/favicon.ico' %}">
+</head>
+
+<body>
+    <!-- wrap -->
+    <div class="wrap">
+        <!-- header -->
+        <header class="header">
+            <div class="inner-wrap">
+                <div class="logo-block"><a href="" class="logo">Мебельный магазин</a>
+                </div>
+                <div class="main-phone-block">
+                    <a href="tel:84952128506" class="phone">8 (495) 212-85-06</a>
+                    <div class="shedule">время работы с 9-00 до 18-00</div>
+                </div>
+                <div class="actions-block">
+                    <form action="/" class="main-frm-search">
+                        <input type="text" placeholder="Поиск">
+                        <button type="submit"></button>
+                    </form>
+                    <nav class="menu-block">
+                        <ul>
+                            {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'users:profile' %}" >{{ user.first_name}} {{ user.last_name }} [{{ user.username }}]</a>
+                            </li>
+                            <li><a href="{% url 'users:logout' %}">Выйти</a>
+                            </li>
+                            {% else %}
+                               
+                            <li class="att popup-wrap">
+                                <a id="hd_singin_but_open" href="" class="btn-toggle">Войти на сайт</a>
+                                <form action="{% url 'users:login' %}" method="POST" class="frm-login popup-block">
+                                    {% csrf_token %}
+                                    <div class="frm-title">Войти на сайт</div>
+                                    <a href="" class="btn-close">Закрыть</a>
+                                    <div class="frm-row"><input type="text" name="username" id="id_username" placeholder="Логин"></div>
+                                    <div class="frm-row"><input type="password" name="password" id="id_password" placeholder="Пароль"></div>
+                                    <div class="frm-row"><a href="{% url 'users:password_reset' %}" class="btn-forgot">Забыли пароль</a></div>
+                                    <div class="frm-row">
+                                        <div class="frm-chk">
+                                            <input type="checkbox" id="login">
+                                            <label for="login">Запомнить меня</label>
+                                        </div>
+                                    </div>
+                                    <div class="frm-row"><input type="submit" value="Войти"></div>
+                                </form>
+                            </li>
+                            <li><a href="{% url 'users:register' %}">Зарегистрироваться</a>
+                            </li>
+
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <!-- /header -->
+        <!-- nav -->
+        <nav class="nav">
+            <div class="inner-wrap">
+                <div class="menu-block popup-wrap">
+                    <a href="" class="btn-menu btn-toggle"></a>
+                    <div class="menu popup-block">
+                        <ul class="">
+                            <li class="main-page"><a href="{% url 'main:index' %}">Главная</a>
+                            </li>
+                            <li>
+                                <a href="/company/{{ title_link }}">Компания</a>
+                                <ul>
+                                    {% for rubric in rubric_company %} 
+                                     <li>
+                                        <a href="{% url 'company:company' rubric.slug %}">{{ rubric.name }}</a>
+                                    </li>
+                                    {% endfor %}
+                                    <li>
+                                        <a href="{% url 'company:otzyvy' %}">Отзывы</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'news:list' %}">Новости</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'catalog:list' %}">Каталог</a>
+                                <ul>
+                                   {% for rubric in rubric_catalog %} 
+                                    <li><a href="{{  rubric.get_absolute_url}}">{{ rubric.name }}</a>
+                                    </li>
+                                   {% endfor %} 
+                                </ul>
+                            </li>
+                            <li><a href="">Фотогалерея</a>
+                            </li>
+                            <li><a href="">Партнерам</a>
+                            </li>
+                            <li><a href="">Контакты</a>
+                            </li>
+                        </ul>
+                        <a href="" class="btn-close"></a>
+                    </div>
+                    <div class="menu-overlay"></div>
+                </div>
+            </div>
+        </nav>
+        <!-- /nav -->
+        <!-- page -->
+        <div class="page">
+            <!-- content box -->
+            <div class="content-box">
+                <!-- content -->
+                {% block content %}  {% endblock %} 
+                <!-- /content -->
+                <!-- side -->
+                <div class="side">
+                    {% if rubrics %}
+                       
+                    <div class="side-block side-menu">
+                        <div class="title-block">Навигация</div>
+                        <div class="menu-block">
+                            <ul>
+                                {% for rubric in rubrics%} 
+                                 <li class=' {% if rubric.slug in request.path  %}selected{% endif %} '><a href="{% url 'company:company' rubric.slug %}">{{ rubric.name }}</a>
+                                </li>
+                                {% endfor %}
+                                {% if 'company' in request.path  %}
+                                  <li class=' {% if "otzyvy" in request.path  %}selected{% endif %} '>
+                                      <a href="{% url 'company:otzyvy' %}">Отзывы</a>
+                                  </li> 
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if category_products%}
+                       
+                    <div class="side-block side-menu">
+                        <div class="title-block">Навигация</div>
+                        <div class="menu-block">
+                            <ul>
+                                {% for rubric in category_products %} 
+                                 <li class=' {% if rubric.slug in request.path  %}selected{% endif %} '><a href="{% url 'catalog:category_products' rubric.slug %}">{{ rubric.name }}</a>
+                                </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!-- side anonse -->
+                   {% include 'layout/usefullinfo.html'  %} 
+                    <!-- /side anonse -->
+                    <!-- side wrap -->
+                    <div class="side-wrap">
+                        <div class="item-wrap">
+                            <!-- side action -->
+                            <div class="side-block side-action">
+                                <img src="{% static '/img/side-action-bg.jpg' %}" alt="" class="bg">
+                                <div class="photo-block">
+                                    <img src="{% static '/img/side-action.jpg' %}" alt="">
+                                </div>
+                                <div class="text-block">
+                                    <div class="title">Акция!</div>
+                                    <p>Мебельная полка всего за 560 <span class="r">a</span>
+                                    </p>
+                                </div>
+                                <a href="" class="btn-more">подробнее</a>
+                            </div>
+                            <!-- /side action -->
+                        </div>
+                                              
+                       <!-- footer rew slider box -->
+                       <div class="item-wrap">
+		                     <div class="rew-footer-carousel">
+							{% include 'layout/random_review.html'  %}	
+								
+								</div>
+							</div>
+						</div>
+						<!-- / footer rew slider box --> 
+                    </div>
+                    <!-- /side wrap -->
+                </div>
+                <!-- /side -->
+            </div>
+            <!-- /content box -->
+        </div>
+        <!-- /page -->
+        <div class="empty"></div>
+    </div>
+    <!-- /wrap -->
+    <!-- footer -->
+    <footer class="footer">
+        <div class="inner-wrap">
+            <nav class="main-menu">
+                <div class="item">
+                    <div class="title-block">О магазине</div>
+                    <ul>
+                        <li><a href="">Отзывы</a>
+                        </li>
+                        <li><a href="">Руководство </a>
+                        </li>
+                        <li><a href="">История</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <div class="title-block">Каталог товаров</div>
+                    <ul>
+                        <li><a href="">Кухни</a>
+                        </li>
+                        <li><a href="">Гарнитуры</a>
+                        </li>
+                        <li><a href="">Спальни и матрасы</a>
+                        </li>
+                        <li><a href="">Столы и стулья</a>
+                        </li>
+                        <li><a href="">Раскладные диваны</a>
+                        </li>
+                        <li><a href="">Кресла</a>
+                        </li>
+                        <li><a href="">Кровати и кушетки</a>
+                        </li>
+                        <li><a href="">Тумобчки и прихожие</a>
+                        </li>
+                        <li><a href="">Аксессуары</a>
+                        </li>
+                        <li><a href="">Каталоги мебели</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="contacts-block">
+                <div class="title-block">Контактная информация</div>
+                <div class="loc-block">
+                    <div class="address">ул. Летняя, стр.12, офис 512</div>
+                    <div class="phone"><a href="tel:84952128506">8 (495) 212-85-06</a>
+                    </div>
+                </div>
+                <div class="main-soc-block">
+                    <a href="" class="soc-item">
+                        <img src="{% static '/img/icons/soc01.png' %}" alt="">
+                    </a>
+                    <a href="" class="soc-item">
+                        <img src="{% static '/img/icons/soc02.png' %}" alt="">
+                    </a>
+                    <a href="" class="soc-item">
+                        <img src="{% static '/img/icons/soc03.png' %}" alt="">
+                    </a>
+                    <a href="" class="soc-item">
+                        <img src="{% static '/img/icons/soc04.png' %}" alt="">
+                    </a>
+                </div>
+                <div class="copy-block">© 2000 - 2012 "Мебельный магазин"</div>
+            </div>
+        </div>
+    </footer>
+    <!-- /footer -->
+</body>
+
+</html>

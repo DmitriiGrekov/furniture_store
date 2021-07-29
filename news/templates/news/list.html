@@ -1,0 +1,23 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title %} Новости {% endblock %}
+
+{% block content%} 
+
+<div class="content">
+<div class="cnt">
+<div class="news-list">
+<a href="{% url 'news:create' %}">Создать новость</a>
+<br><br>
+{% for n in news %} 
+ <p class="news-item" id="bx_3218110189_3">
+                    <span class="news-date-time">{{ n.publish|date:"d.m.Y" }}</span>
+                            <a href="{{ n.get_absolute_url }}"><b>{{ n.title }}</b></a><br>
+                            {{ n.description|safe|truncatechars:150 }}
+</p>
+{% endfor %}
+		
+</div>
+</div>
+</div>
+{% endblock %}

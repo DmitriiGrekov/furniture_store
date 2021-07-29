@@ -1,0 +1,22 @@
+{% extends 'layout/basic.html'  %}
+
+{% block title%} Создание новости {% endblock %}
+
+{% block content%} 
+
+<div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Создание Новости</h1>
+                        </header>
+                        <hr>
+
+                        <form method="POST" >
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value='Создать'>
+                        </form>
+                        						
+                    </div>
+                </div>
+{% endblock %}

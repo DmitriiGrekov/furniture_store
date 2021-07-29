@@ -1,0 +1,40 @@
+{% extends 'layout/basic.html'  %}
+
+{% load static %}
+
+{% block title%} {{ review.name }} - {{ review.company }} {% endblock %}
+
+{% block content%} 
+    <div class="content">
+                    <div class="cnt">
+                        <header>
+                            <h1>Отзыв - {{ review.name }} - {{ review.company }}</h1>
+                        </header>
+                        <hr>
+           				<div class="review-block">
+							<div class="review-text">
+								<div class="review-text-cont">
+                                    {{ review.content }}
+								</div>
+								<div class="review-autor">
+									{{ review.name }}, {{ review.publish|date:"d.M.Y" }}.г , {{ review.position }} , {{ review.company }}.
+								</div>
+							</div>
+							<div style="clear: both;" class="review-img-wrap"><img src="{{ review.img.url }}" alt="img"></div>
+						</div>
+						<div class="exam-review-doc">
+                            {% if review.files.all %}
+                               
+						<p>Документы:</p>
+                    {% for file in review.files.all %} 
+						<div  class="exam-review-item-doc"><img class="rew-doc-ico" src="{% static '/img/icons/pdf_ico_40.png' %}"><a href="{{ file.files.url }}">{{ file.files.name}}</a></div>
+                    {% endfor %}
+
+                            {% endif %}
+						</div>
+
+						<hr>
+						<a href="{% url 'company:otzyvy' %}" class="review-block_back_link"> &larr; К списку отзывов</a>
+                    </div>
+                </div>
+{% endblock %}
